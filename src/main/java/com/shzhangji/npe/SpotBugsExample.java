@@ -1,24 +1,34 @@
 package com.shzhangji.npe;
 
-import java.util.Random;
-
 import edu.umd.cs.findbugs.annotations.CheckForNull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 
 public class SpotBugsExample {
 
-  public void test() {
-    Object obj = getObject();
+  @NonNull
+  private Object returnNonNull() {
+    return null;
+  }
+
+  @CheckForNull
+  private Object returnNullable() {
+    return null;
+  }
+
+  public void testReturnNullable() {
+    Object obj = returnNullable();
     System.out.println(obj.toString());
   }
 
-  private Object getObject() {
-    return new Random().nextBoolean() ? new Object() : null;
+  private void argumentNonNull(@NonNull Object arg) {
+    System.out.println(arg.toString());
   }
 
-  public void check(@CheckForNull Object arg) {
-    if (arg == null) {
-      throw new NullPointerException();
-    }
+  public void testArgumentNonNull() {
+    argumentNonNull(null);
+  }
+
+  public void testNullableArgument(@CheckForNull Object arg) {
     System.out.println(arg.toString());
   }
 
